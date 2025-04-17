@@ -1,0 +1,68 @@
+Student{
+    firstName,
+    lastName,
+    score,
+    studentNumber,
+    address,
+    nationalCode,
+    isDeleted = false,
+    Year
+}
+==> totalCount = 130
+menu{
+    1 : Register new student
+    2 : Inquiry capacity
+    3 : Edit student information
+    4 : Cancel registeration
+    5 : Inquiry student information
+    0 : exit
+}
+==> soft delete
+==> hard delete
+=============================================
+while(true){
+    showMenu();
+    menu => input;
+    switch(menu){
+        case 1:
+            Student student = new Student();
+            student info => input;
+            insertToDB(student);
+            showSuccess();
+            break;
+        case 2:
+            int year = getCurrentYear();
+            int count = getCountOfNotDeletedStudentsByYear(year);
+            print(count);
+            break
+        case 3:
+            Student oldData = loadStudentByNationalCode();
+            print(oldDataInfo => getNewDataInfo);
+            //firstName (enter to accept or edit) :
+            //enter => old.firstName = old.firstName
+            //edit => old.firstName = input
+            updateData(oldData);
+            break;
+        case 4:
+            Student student = loadStudentByNationalCode();
+            student.isDeleted = true;
+            updateData(student);
+            break;
+        case 5:
+            Student student = loadStudentByNationalCode();
+            showInfo(student);
+            break;
+        case 0:
+            exit();
+    }
+}
+
+Studnet loadStudentByNationalCode(){
+    String nationalCode => input
+    Student student = loadDataByNationalCode(nationalCode);
+    if(student==null){
+        showNotFound();
+        return null;
+    }
+    return student;
+}
